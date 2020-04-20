@@ -1,11 +1,11 @@
 # COVID-SIMULATION
 ## INTENTION
-This repository represents a simple covid spread model. 
-Since is still a new born project and it is just a "for fun project" the data extracted should not be considered relevant.
-
-The idea is to make this project highly adaptable so in the future it will be easy to add more elements to simulations, and also to modify the configurations that will definitely impact the results so that many little differences in configuration can be calculated without touching the code.
-
-
+This repository represents a simple covid spread model.  
+Since it is still a new born project and it is just a "for fun project" the data extracted should not be considered relevant.  
+  
+The idea is to make this project highly adaptable so in the future it will be easy to add more elements to simulations, and also to modify the configurations that will definitely impact the results so that many little differences in configuration can be calculated without touching the code.  
+  
+  
 ## FLOW
 Simulation has been modelled following this concepts:
   1. Every hour is calculated the spread chance between an infected person and every other non infected one sharing space with the first.
