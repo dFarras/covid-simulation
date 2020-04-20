@@ -1,6 +1,7 @@
 package elements;
 
 import elements.places.House;
+import elements.places.Place;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Person {
-    private House house;
+    private Place location;
     private Boolean infected;
 }

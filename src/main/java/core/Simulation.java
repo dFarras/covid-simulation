@@ -1,11 +1,10 @@
 package core;
 
 import configuration.ConfigurationManager;
-import core.data.InfectionMediator;
 import core.data.SimulationData;
 import core.start.InfectionStrategy;
 import elements.Person;
-import elements.places.House;
+import elements.places.Place;
 
 import java.util.List;
 
@@ -19,9 +18,9 @@ public class Simulation {
             population.stream()
                     .filter(Person::getInfected)
                     .forEach(infectedPerson -> {
-                        House house = infectedPerson.getHouse();
-                        InfectionStrategy infectionStrategy = house.getInfectionStrategy();
-                        house.getPeople().stream()
+                        Place location = infectedPerson.getLocation();
+                        InfectionStrategy infectionStrategy = location.getInfectionStrategy();
+                        location.getPeople().stream()
                                 .filter(target -> !target.getInfected())
                                 .forEach(target -> {
                                     infectedPerson.setInfected(infectionStrategy.isInfected());
