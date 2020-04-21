@@ -3,7 +3,7 @@
 This repository represents a simple covid spread model.  
 Since it is still a new born project and it is just a "for fun project" the data extracted should not be considered relevant.  
   
-The idea is to make this project highly adaptable so in the future it will be easy to add more elements to simulations, and also to modify the configurations that will definitely impact the results so that many little differences in configuration can be calculated without touching the code.  
+The idea is to make this project highly adaptable so in the future it will be easy to add more elements to simulations, and also to modify the configurations that will definitely impact the results so that many little differences in org.dfarras.configuration can be calculated without touching the code.  
   
   
 ## FLOW

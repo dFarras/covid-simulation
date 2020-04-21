@@ -1,4 +1,4 @@
-!!configuration.models.StartConfig
+!!org.dfarras.simulation.configuration.models.StartConfig
 population: 1000
 personPerHouse: 3
 initialInfectedPopulation: 100

@@ -1,2 +1,2 @@
-!!configuration.models.SimulationConfig
+!!org.dfarras.simulation.configuration.models.SimulationConfig
 totalSimulatedHours: 160
