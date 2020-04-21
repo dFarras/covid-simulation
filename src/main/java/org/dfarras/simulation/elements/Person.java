@@ -1,7 +1,6 @@
-package elements;
+package org.dfarras.simulation.elements;
 
-import elements.places.House;
-import elements.places.Place;
+import org.dfarras.simulation.elements.places.Place;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

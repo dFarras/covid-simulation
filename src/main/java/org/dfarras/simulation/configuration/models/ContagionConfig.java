@@ -1,4 +1,4 @@
-package configuration.models;
+package org.dfarras.simulation.configuration.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
