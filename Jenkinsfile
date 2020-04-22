@@ -14,14 +14,16 @@ pipeline {
             }
         }
         stage('KILL-PREV') {
-            try {
-                steps {
-                    sh "docker stop ${container_name}"
-                    sh "docker rm ${container_name}"
-                    sh "docker rmi ${image_name}"
+            steps {
+                script {
+                    try {
+                        sh "docker stop ${container_name}"
+                        sh "docker rm ${container_name}"
+                        sh "docker rmi ${image_name}"
+                    } catch(Exception e) {
+                        echo e.getMessage()
+                    }
                 }
-            } catch(Exception e) {
-                echo e.getMessage()    
             }
         }
         stage('DOCKER-BUILD') {
