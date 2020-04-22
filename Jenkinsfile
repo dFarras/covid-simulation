@@ -15,19 +15,15 @@ pipeline {
         }
         stage('KILL-PREV') {
             steps {
-                sh "docker stop ${container_name}"
-                sh "docker rm ${container_name}"
-                sh "docker rmi ${image_name}"
+                sh "docker stop ${container_name} || true"
+                sh "docker rm ${container_name} || true"
+                sh "docker rmi ${image_name} || true"
             }
-            post {
-                always {
-                    stage('DOCKER-BUILD') {
-                        steps {
-                            sh "docker build -t ${image_name} ."
-                            sh "docker run -d -p 80:8080 --name=${container_name} ${image_name}"
-                        }
-                    }
-                }
+        }
+        stage('DOCKER-BUILD') {
+            steps {
+                sh "docker build -t ${image_name} ."
+                sh "docker run -d -p 80:8080 --name=${container_name} ${image_name}"
             }
         }
     }
