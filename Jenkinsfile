@@ -1,6 +1,6 @@
+def image_name = "covid-simulation-image"
+def container_name = "simulation-container"
 pipeline {
-    def image_name = "covid-simulation-image"
-    def container_name = "simulation-container"
     agent { docker { image 'maven:3.6.3-jdk-14' } }
     stages {
         stage('DOWNLOAD') {
