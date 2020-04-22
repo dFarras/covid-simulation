@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('DOWNLOAD') {
             steps {
-                git 'https://github.com/dFarras/covid-simulation.git'
+                checkout scm
             }
         }
         stage('PACKAGE') {
