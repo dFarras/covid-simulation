@@ -15,21 +15,19 @@ pipeline {
         }
         stage('KILL-PREV') {
             steps {
-                script {
-                    try {
-                        sh "docker stop ${container_name}"
-                        sh "docker rm ${container_name}"
-                        sh "docker rmi ${image_name}"
-                    } catch(Exception e) {
-                        echo e.getMessage()
+                sh "docker stop ${container_name}"
+                sh "docker rm ${container_name}"
+                sh "docker rmi ${image_name}"
+            }
+            post {
+                always {
+                    stage('DOCKER-BUILD') {
+                        steps {
+                            sh "docker build -t ${image_name} ."
+                            sh "docker run -d -p 80:8080 --name=${container_name} ${image_name}"
+                        }
                     }
                 }
-            }
-        }
-        stage('DOCKER-BUILD') {
-            steps {
-                sh "docker build -t ${image_name} ."
-                sh "docker run -d -p 80:8080 --name=${container_name} ${image_name}"
             }
         }
     }
