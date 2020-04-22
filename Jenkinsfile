@@ -1,5 +1,4 @@
 pipeline {
-    agent { docker { image 'maven:3.6.3-jdk-14' } }
     stages {
         stage('DOWNLOAD') {
             steps {
@@ -7,6 +6,7 @@ pipeline {
             }
         }
         stage('PACKAGE') {
+            agent { docker { image 'maven:3.6.3-jdk-14' } }
             steps {
                 sh 'mvn package'
             }
