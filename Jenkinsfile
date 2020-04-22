@@ -11,5 +11,11 @@ pipeline {
                 sh 'mvn package'
             }
         }
+        stage('DOCKER-BUILD') {
+            steps {
+                sh 'docker build -t covid-simulation-image .'
+                sh 'docker run -d --name=simulation-container covid-simulation-image'
+            }
+        }
     }
 }
