@@ -1,15 +1,13 @@
 package org.dfarras.simulation.web;
 
-import org.dfarras.simulation.configuration.models.ContagionConfig;
-import org.dfarras.simulation.configuration.models.SimulationConfig;
-import org.dfarras.simulation.configuration.models.StartConfig;
-import org.dfarras.simulation.core.data.SimulationData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.dfarras.simulation.core.data.HourData;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,5 +17,7 @@ public class SimulationRS {
     private LocalDateTime startTime;
     private LocalDateTime simulationTime;
     private long totalInfected;
+    private Double totalSimulatedDays;
+    private List<HourData> hourlyReport;
     private SimulationConfiguration configuration;
 }

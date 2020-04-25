@@ -45,7 +45,9 @@ public class SimulationWebStarter {
         configurationManager.overrideConfiguration(simulationRQ);
         List<Person> simulationPopulation = startup.buildSimulationData();
         simulation.runSimulation(simulationPopulation);
-        return new ResponseEntity<>(getSimulationRS(), HttpStatus.OK);
+        SimulationRS result = getSimulationRS();
+        simulationDataManager.removeSimulation();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     private SimulationRS getSimulationRS() {
@@ -58,6 +60,8 @@ public class SimulationWebStarter {
                 .startTime(simulationData.getStartTime())
                 .simulationTime(simulationData.getSimulationTime())
                 .totalInfected(simulationData.getTotalInfected())
+                .totalSimulatedDays(simulationData.getTotalSimulatedDays())
+                .hourlyReport(simulationData.getHourlyReport())
                 .configuration(
                         SimulationConfiguration.builder()
                                 .population(startConfig.getPopulation())

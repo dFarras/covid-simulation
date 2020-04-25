@@ -29,6 +29,7 @@ public class Simulation {
         SimulationData simulationData = simulationDataManager.getCurrentSimulation();
         int hourRun = 0;
         long hoursToSimulate = configurationManager.getSimulationConfig().getTotalSimulatedHours();
+        simulationData.addFirstHourReport();
         while (hourRun < hoursToSimulate) {
             population.forEach(person -> {
                 if (person.getInfected()) {

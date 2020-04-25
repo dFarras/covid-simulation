@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "74d98622-cfc2-4918-86cd-0f70d4223cb0",
+		"name": "Covid-simulation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SimulationTemplate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"startConfiguration\": {\n\t\t\"population\": 1000,\n\t\t\"personPerHouse\": 3,\n\t\t\"initialInfectedPopulation\": 100\n\t},\n\t\"simulationConfiguration\": {\n\t\t\"totalSimulatedHours\": 160\n\t},\n\t\"contagionConfiguration\": {\n\t\t\"houseSpreadChance\": 10.00\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{host}}:{{cov-port}}/covid-simulation/start-simulation",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{cov-port}}",
+					"path": [
+						"covid-simulation",
+						"start-simulation"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
