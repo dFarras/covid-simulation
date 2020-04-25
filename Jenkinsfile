@@ -3,11 +3,6 @@ def container_name = "simulation-container"
 pipeline {
     agent any
     stages {
-        stage('DOWNLOAD') {
-            steps {
-                checkout scm
-            }
-        }
         stage('PACKAGE') {
             agent { docker { image 'maven:3.6.3-jdk-14' } }
             steps {
