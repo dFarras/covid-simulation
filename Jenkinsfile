@@ -4,7 +4,7 @@ pipeline {
     agent any
     stages {
         stage('PACKAGE') {
-            agent { docker { image 'maven:3.6.3-jdk-14' } }
+            agent { docker { image 'maven:3.6.3-jdk-14' reuseNode true} }
             steps {
                 sh 'mvn package'
             }
