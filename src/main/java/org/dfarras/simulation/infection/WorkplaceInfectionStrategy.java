@@ -1,4 +1,4 @@
-package org.dfarras.simulation.core.start;
+package org.dfarras.simulation.infection;
 
 import org.dfarras.simulation.configuration.ConfigurationManager;
 import org.dfarras.simulation.core.ChanceRoll;
@@ -8,20 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HouseInfectionStrategy implements InfectionStrategy {
+public class WorkplaceInfectionStrategy implements InfectionStrategy {
     private ChanceRoll chanceRoll;
     private ConfigurationManager configurationManager;
     private InfectionMediator infectionMediator;
 
     @Autowired
-    public HouseInfectionStrategy(ChanceRoll chanceRoll, ConfigurationManager configurationManager, InfectionMediator infectionMediator) {
+    public WorkplaceInfectionStrategy(ChanceRoll chanceRoll,
+                                      ConfigurationManager configurationManager,
+                                      InfectionMediator infectionMediator) {
         this.chanceRoll = chanceRoll;
         this.configurationManager = configurationManager;
         this.infectionMediator = infectionMediator;
     }
 
     private Double getSpreadChance() {
-        return configurationManager.getContagionConfig().getHouseSpreadChance();
+        return configurationManager.getContagionConfig().getWorkplaceSpreadChance();
     }
 
     @Override

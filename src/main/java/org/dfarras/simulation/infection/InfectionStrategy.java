@@ -1,4 +1,4 @@
-package org.dfarras.simulation.core.start;
+package org.dfarras.simulation.infection;
 
 import org.dfarras.simulation.elements.Person;
 
