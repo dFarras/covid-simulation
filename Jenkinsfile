@@ -23,8 +23,6 @@ pipeline {
         }
         stage('DOCKER-BUILD') {
             steps {
-                sh "pwd"
-                echo "${workspace}"
                 sh "docker build -t ${image_name} ."
                 sh "docker run -d -p 80:8080 --name=${container_name} ${image_name}"
             }
