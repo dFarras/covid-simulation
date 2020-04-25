@@ -1,7 +1,9 @@
 package org.dfarras.simulation.web;
 
 import org.dfarras.simulation.configuration.ConfigurationManager;
+import org.dfarras.simulation.configuration.models.*;
 import org.dfarras.simulation.core.Simulation;
+import org.dfarras.simulation.core.data.SimulationData;
 import org.dfarras.simulation.core.data.SimulationDataManager;
 import org.dfarras.simulation.core.start.Startup;
 import org.dfarras.simulation.elements.Person;
@@ -32,9 +34,9 @@ public class SimulationWebStarter {
     }
 
     /**
-     * Endpoint to start a simulation a contractor
+     * Endpoint to start a simulation
      *
-     * @return contractor with given nif
+     * @return simulation info result
      */
     @PostMapping(path = "/start-simulation",
             consumes = {"application/json"},
@@ -47,11 +49,26 @@ public class SimulationWebStarter {
     }
 
     private SimulationRS getSimulationRS() {
+        SimulationData simulationData = simulationDataManager.getCurrentSimulation();
+        StartConfig startConfig = configurationManager.getStartConfig();
+        SimulationConfig simulationConfig = configurationManager.getSimulationConfig();
+        ContagionConfig contagionConfig = configurationManager.getContagionConfig();
+        ScheduleConfig scheduleConfig = configurationManager.getScheduleConfig();
         return SimulationRS.builder()
-                .startConfig(configurationManager.getStartConfig())
-                .simulationConfig(configurationManager.getSimulationConfig())
-                .contagionConfig(configurationManager.getContagionConfig())
-                .simulationData(simulationDataManager.getCurrentSimulation())
+                .startTime(simulationData.getStartTime())
+                .simulationTime(simulationData.getSimulationTime())
+                .totalInfected(simulationData.getTotalInfected())
+                .configuration(
+                        SimulationConfiguration.builder()
+                                .population(startConfig.getPopulation())
+                                .personPerHouse(startConfig.getPersonPerHouse())
+                                .initialInfectedPopulation(startConfig.getInitialInfectedPopulation())
+                                .totalSimulatedHours(simulationConfig.getTotalSimulatedHours())
+                                .houseSpreadChance(contagionConfig.getHouseSpreadChance())
+                                .schedule(scheduleConfig.getScheduleEntries())
+
+                                .build()
+                )
                 .build();
     }
 }

@@ -1,26 +1,32 @@
 package org.dfarras.simulation.configuration;
 
 import org.dfarras.simulation.configuration.models.ContagionConfig;
-import org.dfarras.simulation.configuration.models.StartConfig;
+import org.dfarras.simulation.configuration.models.ScheduleConfig;
 import org.dfarras.simulation.configuration.models.SimulationConfig;
+import org.dfarras.simulation.configuration.models.StartConfig;
+import org.dfarras.simulation.web.SimulationRQ;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
-import org.dfarras.simulation.web.SimulationRQ;
 
 import java.io.InputStream;
 
 @Component
 public class ConfigurationManager {
-    private StartConfig startConfig = getConfiguration("start-config.yml");
-    private ContagionConfig contagionConfig = getConfiguration("contagion-config.yml");
-    private SimulationConfig simulationConfig = getConfiguration("simulation-config.yml");
+    private StartConfig startConfig;
+    private ContagionConfig contagionConfig;
+    private SimulationConfig simulationConfig;
+    private ScheduleConfig scheduleConfig;
 
-    private static  <T> T getConfiguration(String configPath) {
-        Yaml yaml = new Yaml();
-        InputStream inputStream = ConfigurationManager.class
-                .getClassLoader()
-                .getResourceAsStream(configPath);
-        return yaml.load(inputStream);
+    @Autowired
+    public ConfigurationManager(StartConfig startConfig,
+                                ContagionConfig contagionConfig,
+                                SimulationConfig simulationConfig,
+                                ScheduleConfig scheduleConfig) {
+        this.startConfig = startConfig;
+        this.contagionConfig = contagionConfig;
+        this.simulationConfig = simulationConfig;
+        this.scheduleConfig = scheduleConfig;
     }
 
     public StartConfig getStartConfig() {
@@ -32,6 +38,10 @@ public class ConfigurationManager {
     }
 
     public SimulationConfig getSimulationConfig() {return this.simulationConfig;}
+
+    public ScheduleConfig getScheduleConfig() {
+        return this.scheduleConfig;
+    }
 
     public void overrideConfiguration(SimulationRQ simulationRQ) {
         this.startConfig = simulationRQ.getStartConfiguration();

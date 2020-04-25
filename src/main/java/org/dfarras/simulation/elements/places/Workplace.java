@@ -8,7 +8,7 @@ import org.dfarras.simulation.infection.InfectionStrategy;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class House implements Place {
+public class Workplace implements Place {
     private int capacity;
     private int actualCapacity;
     private InfectionStrategy infectionStrategy;

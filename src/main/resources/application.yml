@@ -1,0 +1,17 @@
+start-config:
+  population: 1000
+  personPerHouse: 3
+  initialInfectedPopulation: 100
+simulation-config:
+  totalSimulatedHours: 160
+contagion-config:
+  houseSpreadChance: 10.00
+  workplaceSpreadChance: 10.00
+schedule-config:
+  schedule-entries:
+  - place: 'House'
+    start: '16:00:00'
+    end: '08:00:00'
+  - place: 'Workplace'
+    start: '08:00:00'
+    end: '16:00:00'

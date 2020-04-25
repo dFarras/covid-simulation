@@ -3,8 +3,7 @@ package org.dfarras.simulation.core;
 import org.dfarras.simulation.configuration.ConfigurationManager;
 import org.dfarras.simulation.core.data.SimulationData;
 import org.dfarras.simulation.core.data.SimulationDataManager;
-import org.dfarras.simulation.core.start.InfectionStrategy;
-import org.dfarras.simulation.elements.ElementFactory;
+import org.dfarras.simulation.infection.InfectionStrategy;
 import org.dfarras.simulation.elements.Person;
 import org.dfarras.simulation.elements.places.Place;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +15,14 @@ import java.util.List;
 public class Simulation {
     private SimulationDataManager simulationDataManager;
     private ConfigurationManager configurationManager;
-    private ElementFactory elementFactory;
+    private PlaceCapacityTracker placeCapacityTracker;
 
     @Autowired
-    public Simulation(SimulationDataManager simulationDataManager, ConfigurationManager configurationManager, ElementFactory elementFactory) {
+    public Simulation(SimulationDataManager simulationDataManager,
+                      ConfigurationManager configurationManager, PlaceCapacityTracker placeCapacityTracker) {
         this.simulationDataManager = simulationDataManager;
         this.configurationManager = configurationManager;
-        this.elementFactory = elementFactory;
+        this.placeCapacityTracker = placeCapacityTracker;
     }
 
     public void runSimulation(List<Person> population) {
@@ -30,19 +30,26 @@ public class Simulation {
         int hourRun = 0;
         long hoursToSimulate = configurationManager.getSimulationConfig().getTotalSimulatedHours();
         while (hourRun < hoursToSimulate) {
-            population.stream()
-                    .filter(Person::getInfected)
-                    .forEach(infectedPerson -> {
-                        Place location = infectedPerson.getLocation();
-                        InfectionStrategy infectionStrategy = location.getInfectionStrategy();
-                        location.getPeople().stream()
-                                .filter(target -> !target.getInfected())
-                                .forEach(target -> {
-                                    infectedPerson.setInfected(infectionStrategy.isInfected());
-                                });
-                    });
+            population.forEach(person -> {
+                if (person.getInfected()) {
+                    spreadDisease(person, simulationData);
+                }
+                Place updatedLocation = person.whereIAm(simulationData.getSimulationTime().toLocalTime());
+                placeCapacityTracker.updatePersonLocation(person, updatedLocation, simulationData.getSimulationTime().toLocalTime());
+            });
             simulationData.addOneHour();
             hourRun++;
         }
+    }
+
+    private void spreadDisease(Person infectedPerson, SimulationData simulationData) {
+        Place location = infectedPerson.whereIAm(simulationData.getSimulationTime().toLocalTime());
+        InfectionStrategy infectionStrategy = location.getInfectionStrategy();
+        placeCapacityTracker.getPeopleOf(location)
+                .stream()
+                .filter(target -> !target.getInfected())
+                .forEach(target -> {
+                    target.setInfected(infectionStrategy.isInfected());
+                });
     }
 }
