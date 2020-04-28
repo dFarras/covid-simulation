@@ -38,6 +38,7 @@ public class SimulationWebStarter {
     @PostMapping(path = "/start-simulation",
             consumes = {"application/json"},
             produces = {"application/json"})
+    @CrossOrigin
     public ResponseEntity<SimulationRS> startSimulation(@RequestBody SimulationRQ simulationRQ) {
         configurationManager.overrideConfiguration(simulationRQ);
         List<Person> simulationPopulation = startup.buildSimulationData();
