@@ -24,7 +24,7 @@ pipeline {
         stage('DOCKER-BUILD') {
             steps {
                 sh "docker build -t ${image_name} ."
-                sh "docker run -d -p 80:8080 --name=${container_name} ${image_name}"
+                sh "docker run -d -p 8000:8080 --name=${container_name} ${image_name}"
             }
         }
     }
