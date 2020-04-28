@@ -10,5 +10,6 @@ import org.springframework.context.annotation.Configuration;
 public class StartConfig {
     private Long population;
     private Integer personPerHouse;
+    private Integer personPerWorkplace;
     private Long initialInfectedPopulation;
 }

@@ -39,10 +39,8 @@ public class Startup {
         simulationDataManager.addSimulation();
         StartConfig startConfig = this.configurationManager.getStartConfig();
         Long population = startConfig.getPopulation();
-        Integer personPerHouse = startConfig.getPersonPerHouse();
         List<Person> persons = new ArrayList<>();
 
-        House house = placeFactory.getNewHouse();
         long createdPopulation = 0L;
         while(createdPopulation < population) {
             persons.add(personFactory.getNewPerson(infectionStrategy.isInfected(), simulationDataManager.getCurrentSimulation().getSimulationTime().toLocalTime()));

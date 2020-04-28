@@ -10,10 +10,7 @@ import org.dfarras.simulation.elements.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,12 +38,14 @@ public class SimulationWebStarter {
     @PostMapping(path = "/start-simulation",
             consumes = {"application/json"},
             produces = {"application/json"})
+    @CrossOrigin(origins = {"localhost:*", "*"}, allowedHeaders = {"x-requested-with", "*"})
     public ResponseEntity<SimulationRS> startSimulation(@RequestBody SimulationRQ simulationRQ) {
         configurationManager.overrideConfiguration(simulationRQ);
         List<Person> simulationPopulation = startup.buildSimulationData();
         simulation.runSimulation(simulationPopulation);
         SimulationRS result = getSimulationRS();
         simulationDataManager.removeSimulation();
+        System.out.print(result.toString());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -57,10 +56,12 @@ public class SimulationWebStarter {
         ContagionConfig contagionConfig = configurationManager.getContagionConfig();
         ScheduleConfig scheduleConfig = configurationManager.getScheduleConfig();
         return SimulationRS.builder()
-                .startTime(simulationData.getStartTime())
-                .simulationTime(simulationData.getSimulationTime())
-                .totalInfected(simulationData.getTotalInfected())
-                .totalSimulatedDays(simulationData.getTotalSimulatedDays())
+                .resultSummary(ResultSummary.builder()
+                        .startTime(simulationData.getStartTime())
+                        .simulationTime(simulationData.getSimulationTime())
+                        .totalInfected(simulationData.getTotalInfected())
+                        .totalSimulatedDays(simulationData.getTotalSimulatedDays())
+                        .build())
                 .hourlyReport(simulationData.getHourlyReport())
                 .configuration(
                         SimulationConfiguration.builder()

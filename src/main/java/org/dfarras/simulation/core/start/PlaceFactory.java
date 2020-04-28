@@ -1,5 +1,6 @@
 package org.dfarras.simulation.core.start;
 
+import org.dfarras.simulation.configuration.ConfigurationManager;
 import org.dfarras.simulation.core.PlaceCapacityTracker;
 import org.dfarras.simulation.elements.places.House;
 import org.dfarras.simulation.elements.places.Place;
@@ -16,10 +17,12 @@ import org.springframework.stereotype.Component;
 public class PlaceFactory implements ApplicationContextAware {
     private ApplicationContext applicationContext;
     private PlaceCapacityTracker placeCapacityTracker;
+    private ConfigurationManager configurationManager;
 
     @Autowired
-    public PlaceFactory(PlaceCapacityTracker placeCapacityTracker) {
+    public PlaceFactory(PlaceCapacityTracker placeCapacityTracker, ConfigurationManager configurationManager) {
         this.placeCapacityTracker = placeCapacityTracker;
+        this.configurationManager = configurationManager;
     }
 
     @Override
@@ -39,6 +42,7 @@ public class PlaceFactory implements ApplicationContextAware {
 
     public House getNewHouse() {
         House house = new House();
+        house.setCapacity(configurationManager.getStartConfig().getPersonPerHouse());
         house.setInfectionStrategy(applicationContext.getBean(HouseInfectionStrategy.class));
         placeCapacityTracker.addPlace(house);
         return house;
@@ -46,6 +50,7 @@ public class PlaceFactory implements ApplicationContextAware {
 
     public Workplace getNewWorkplace() {
         Workplace workPlace = new Workplace();
+        workPlace.setCapacity(configurationManager.getStartConfig().getPersonPerWorkplace());
         workPlace.setInfectionStrategy(applicationContext.getBean(WorkplaceInfectionStrategy.class));
         placeCapacityTracker.addPlace(workPlace);
         return workPlace;

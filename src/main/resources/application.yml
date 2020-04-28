@@ -1,3 +1,6 @@
+server:
+  port: 8000
+
 start-config:
   population: 1000
   personPerHouse: 3
