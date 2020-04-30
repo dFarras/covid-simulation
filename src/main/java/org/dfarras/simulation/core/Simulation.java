@@ -49,8 +49,8 @@ public class Simulation {
         placeCapacityTracker.getPeopleOf(location)
                 .stream()
                 .filter(target -> !target.getInfected())
-                .forEach(target -> {
-                    target.setInfected(infectionStrategy.isInfected());
+                .forEach(uninfected -> {
+                    uninfected.setInfected(infectionStrategy.isInfected());
                 });
     }
 }

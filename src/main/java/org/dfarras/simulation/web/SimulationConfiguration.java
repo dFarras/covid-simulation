@@ -15,6 +15,7 @@ import java.util.List;
 public class SimulationConfiguration {
     private Long population;
     private Integer personPerHouse;
+    private Integer personPerWorkplace;
     private Long initialInfectedPopulation;
     private Long totalSimulatedHours;
     private Double houseSpreadChance;

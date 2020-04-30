@@ -45,7 +45,6 @@ public class SimulationWebStarter {
         simulation.runSimulation(simulationPopulation);
         SimulationRS result = getSimulationRS();
         simulationDataManager.removeSimulation();
-        System.out.print(result.toString());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -67,6 +66,7 @@ public class SimulationWebStarter {
                         SimulationConfiguration.builder()
                                 .population(startConfig.getPopulation())
                                 .personPerHouse(startConfig.getPersonPerHouse())
+                                .personPerWorkplace(startConfig.getPersonPerWorkplace())
                                 .initialInfectedPopulation(startConfig.getInitialInfectedPopulation())
                                 .totalSimulatedHours(simulationConfig.getTotalSimulatedHours())
                                 .houseSpreadChance(contagionConfig.getHouseSpreadChance())

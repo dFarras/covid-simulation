@@ -9,14 +9,18 @@ import java.util.*;
 
 @Component
 public class PlaceCapacityTracker {
-    private static final Map<Place, List<Person>> locations = new HashMap<>();
+    private final Map<Place, List<Person>> locations = new HashMap<>();
 
     public List<Person> getPeopleOf(Place place) {
-        return locations.get(place);
+        synchronized (locations) {
+            return locations.get(place);
+        }
     }
 
     public void addPlace(Place place) {
-        locations.put(place, new ArrayList<>());
+        synchronized (locations) {
+            locations.put(place, new ArrayList<>());
+        }
     }
 
     public void updatePersonLocation(Person person, Place place, LocalTime localTime) {
