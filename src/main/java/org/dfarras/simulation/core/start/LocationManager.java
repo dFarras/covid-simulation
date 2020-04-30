@@ -24,17 +24,20 @@ public class LocationManager {
     }
 
     public <T extends Place> Place getPlace(Class<T> clazz) {
-        Place result = availablePlaces.stream()
-                .filter(clazz::isInstance)
-                .findFirst()
-                .orElseGet(() -> {
-                    Place place = placeFactory.getNewPlace(clazz);
-                    availablePlaces.add(place);
-                    return place;
-                });
-        result.increaseCapacity();
-        if(result.isFull()) {
-            availablePlaces.remove(result);
+        Place result;
+        synchronized (availablePlaces) {
+            result = availablePlaces.stream()
+                    .filter(clazz::isInstance)
+                    .findFirst()
+                    .orElseGet(() -> {
+                        Place place = placeFactory.getNewPlace(clazz);
+                        availablePlaces.add(place);
+                        return place;
+                    });
+            result.increaseCapacity();
+            if (result.isFull()) {
+                availablePlaces.remove(result);
+            }
         }
         return result;
     }
