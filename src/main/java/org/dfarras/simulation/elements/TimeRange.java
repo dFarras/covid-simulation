@@ -14,6 +14,12 @@ public class TimeRange {
     private LocalTime end;
 
     public boolean isInRange(LocalTime time) {
-        return time.minusMinutes(1).isAfter(start) || time.isBefore(end);
+        boolean result;
+        if(start.isBefore(end)) {
+            result = time.minusMinutes(1).isAfter(start) && time.isBefore(end);
+        } else {
+            result = (time.isBefore(start) && time.isBefore(end)) || (time.isAfter(start) && time.isAfter(end));
+        }
+        return result;
     }
 }

@@ -4,20 +4,21 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Data
-@Configuration
-@ConfigurationProperties(prefix = "start-config")
 public class StartConfig {
-    @NotBlank
-    @Size(min = 100, max = 10000)
+    @NotNull
+    @Max(10001)
+    @PositiveOrZero
     private Long population;
-    @NotBlank
+    @NotNull
+    @PositiveOrZero
     private Integer personPerHouse;
-    @NotBlank
+    @NotNull
+    @PositiveOrZero
     private Integer personPerWorkplace;
-    @NotBlank
+    @NotNull
+    @PositiveOrZero
     private Long initialInfectedPopulation;
 }

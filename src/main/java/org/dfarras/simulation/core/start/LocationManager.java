@@ -1,6 +1,7 @@
 package org.dfarras.simulation.core.start;
 
 import org.dfarras.simulation.elements.places.Place;
+import org.dfarras.simulation.elements.places.Workplace;
 import org.dfarras.simulation.exceptions.ElementCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Component
 public class LocationManager {
-    private static final List<Place> availablePlaces = new ArrayList<>();
+    private final List<Place> availablePlaces = new ArrayList<>();
     private static final String PLACES_PATH_PREFIX = "org.dfarras.simulation.elements.places.";
     private PlaceFactory placeFactory;
 
@@ -26,8 +27,9 @@ public class LocationManager {
     public <T extends Place> Place getPlace(Class<T> clazz) {
         Place result;
         synchronized (availablePlaces) {
-            result = availablePlaces.stream()
-                    .filter(clazz::isInstance)
+            result = availablePlaces
+                    .stream()
+                    .filter(plcae -> thisda(clazz, plcae))
                     .findFirst()
                     .orElseGet(() -> {
                         Place place = placeFactory.getNewPlace(clazz);
@@ -40,6 +42,9 @@ public class LocationManager {
             }
         }
         return result;
+    }
+    private <T extends Place> boolean thisda(Class<T> clazz, Place place) {
+        return clazz.getCanonicalName().equals(place.getClass().getCanonicalName());
     }
 
     private Class<? extends Place> getPlaceClass(String placeClassName) {

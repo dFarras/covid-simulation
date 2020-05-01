@@ -7,9 +7,6 @@ import org.dfarras.simulation.configuration.models.StartConfig;
 import org.dfarras.simulation.web.SimulationRQ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.yaml.snakeyaml.Yaml;
-
-import java.io.InputStream;
 
 @Component
 public class ConfigurationManager {
@@ -19,13 +16,7 @@ public class ConfigurationManager {
     private ScheduleConfig scheduleConfig;
 
     @Autowired
-    public ConfigurationManager(StartConfig startConfig,
-                                ContagionConfig contagionConfig,
-                                SimulationConfig simulationConfig,
-                                ScheduleConfig scheduleConfig) {
-        this.startConfig = startConfig;
-        this.contagionConfig = contagionConfig;
-        this.simulationConfig = simulationConfig;
+    public ConfigurationManager(ScheduleConfig scheduleConfig) {
         this.scheduleConfig = scheduleConfig;
     }
 

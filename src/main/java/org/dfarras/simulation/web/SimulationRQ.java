@@ -8,12 +8,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class SimulationRQ {
+    @Valid
     private StartConfig startConfiguration;
+    @Valid
     private SimulationConfig simulationConfiguration;
+    @Valid
     private ContagionConfig contagionConfiguration;
 }

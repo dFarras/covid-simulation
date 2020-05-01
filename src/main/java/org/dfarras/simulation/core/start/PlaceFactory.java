@@ -32,7 +32,7 @@ public class PlaceFactory implements ApplicationContextAware {
 
     public <T extends Place> Place getNewPlace(Class<T> type) {
         Place result;
-        if(type.isInstance(House.class)) {
+        if(type.getCanonicalName().equals(House.class.getCanonicalName())) {
             result = getNewHouse();
         } else {
             result = getNewWorkplace();

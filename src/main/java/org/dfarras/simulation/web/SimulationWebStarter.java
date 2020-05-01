@@ -10,10 +10,13 @@ import org.dfarras.simulation.elements.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping(path = "/covid-simulation")
 public class SimulationWebStarter {
@@ -39,7 +42,7 @@ public class SimulationWebStarter {
             consumes = {"application/json"},
             produces = {"application/json"})
     @CrossOrigin
-    public ResponseEntity<SimulationRS> startSimulation(@RequestBody SimulationRQ simulationRQ) {
+    public ResponseEntity<SimulationRS> startSimulation(@Valid @RequestBody SimulationRQ simulationRQ) {
         configurationManager.overrideConfiguration(simulationRQ);
         List<Person> simulationPopulation = startup.buildSimulationData();
         simulation.runSimulation(simulationPopulation);
